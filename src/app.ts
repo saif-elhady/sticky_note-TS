@@ -1,5 +1,6 @@
-import express from 'express';
+import express, { Router } from 'express';
 import mongoose from 'mongoose';
+import route from './routes/route';
 require('dotenv').config();
 
 //express app
@@ -17,3 +18,12 @@ app.set('view engine', 'ejs');
 //static files
 app.use(express.urlencoded({ extended: true }));
 
+//public files
+app.use(express.static('public'));
+
+//set routes
+app.use('/notes', route);
+
+app.use((req, res) => {
+    res.status(404).render('404', { title: '404' });
+});
